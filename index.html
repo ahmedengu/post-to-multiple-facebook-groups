@@ -7,6 +7,7 @@
 <meta name="robots" content="noindex, nofollow">
 <!-- Bootstrap -->
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -14,9 +15,31 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
+<style>
+    #divLoading.show {
+        display: block;
+        position: fixed;
+        z-index: 9999;
+        opacity: 0.9;
+        background: #ffffff url('spinner.gif') no-repeat center;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        top: 0;
+    }</style>
 
 <body>
 <script>
+    function hideSpinner() {
+        $('#divLoading').fadeOut(250, function () {
+            $('#divLoading').removeClass('show');
+        });
+    }
+    function showSpinner() {
+        $('#divLoading').fadeIn(250, function () {
+            $('#divLoading').addClass('show');
+        });
+    }
     // This is called with the results from from FB.getLoginStatus().
     function statusChangeCallback(response) {
         console.log('statusChangeCallback');
@@ -92,7 +115,7 @@
         FB.getLoginStatus(function (response) {
             statusChangeCallback(response);
         });
-
+        hideSpinner();
     };
 
     // Load the SDK asynchronously
@@ -118,24 +141,31 @@
 
     // This function reads your Facebook groups.
     function getMyGroups() {
+        showSpinner();
+
         FB.api('/me/groups', function (response) {
             var groupList = document.getElementById('groups');
             while (groupList.lastChild) {
                 groupList.removeChild(groupList.lastChild);
             }
-            response.data.forEach(function (group) {
-                var opt = document.createElement("option");
-                opt.value = group.id;
-                opt.innerHTML = group.name;
-                opt.selected = true;
-                groupList.appendChild(opt);
-            });
+            if (response.data)
+                response.data.forEach(function (group) {
+                    var opt = document.createElement("option");
+                    opt.value = group.id;
+                    opt.innerHTML = group.name;
+                    opt.selected = true;
+                    groupList.appendChild(opt);
+                });
+            else
+                alert("Error occurred while loading your groups");
+            hideSpinner();
         }, {
             scope: 'user_groups,publish_actions,user_managed_groups'
         });
     }
 
     function postToSelectedGroups() {
+        showSpinner();
         var groupList = document.getElementById('groups');
 
         var selectedGroupIds = [];
@@ -165,6 +195,7 @@
                         setTimeout(postOrFinish, delay * 1000);
                     });
             } else {
+                hideSpinner();
                 alert('All done!');
             }
         }
@@ -172,6 +203,7 @@
         postOrFinish();
     }
 </script>
+<div id="divLoading" class="show"></div>
 
 <a href="https://github.com/ahmedengu/post-to-multiple-facebook-groups"><img
         style="position: absolute; top: 0; left: 0; border: 0;"
