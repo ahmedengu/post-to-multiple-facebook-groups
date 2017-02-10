@@ -136,6 +136,7 @@
             console.log('Successful login for: ' + response.name);
             document.getElementById('status').innerHTML =
                 'Thanks for logging in, ' + response.name + '!';
+            getMyGroups();
         });
     }
 
@@ -218,8 +219,8 @@
             </Button>
             <br>
             <div class="alert alert-warning">
-                <strong>Notice!</strong> Your app should support versions &lt;= 2.3 & app domains should contain
-                'ahmedengu.github.io'.
+                <strong>Notice!</strong> <a href="app%20version.PNG">Your app should support versions &lt;= 2.3</a> & <a href="app%20domains.PNG">app domains should contain
+                'ahmedengu.github.io'</a>.
             </div>
             <div class="col-lg-10 col-lg-offset-2">
                 <!--

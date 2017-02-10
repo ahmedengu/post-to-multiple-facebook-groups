@@ -3,8 +3,12 @@ Post to multiple Facebook groups
 
 Post to multiple Facebook groups in one click.
 
-# Notice your app version should be <= 2.3
-![appVersion](app version.PNG)
+##### Notice your app version should be <= 2.3
+![appVersion](app%20version.PNG)
+
+##### App domains should contain 'ahmedengu.github.io'
+![appDomains](app%20domains.PNG)
+
 
 ## Screenshot
 
