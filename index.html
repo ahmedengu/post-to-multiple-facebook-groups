@@ -53,15 +53,19 @@
         var parts = value.split("; " + name + "=");
         if (parts.length >= 2) return parts.pop().split(";").shift();
     }
-    function setAppId() {
+    function setAppId(refresh) {
         var prompt = window.prompt("App Id", "");
-        document.cookie = "your-app-id=" + prompt;
+        if (prompt) {
+            document.cookie = "your-app-id=" + prompt;
+            if (refresh)
+                window.location.reload(true);
+        }
         return prompt;
     }
     window.fbAsyncInit = function () {
         var appIdCookie = getCookie("your-app-id");
         if (!appIdCookie) {
-            var prompt = setAppId();
+            var prompt = setAppId(false);
             appIdCookie = prompt;
         }
         FB.init({
@@ -72,16 +76,6 @@
             version: 'v2.3' // use version 2.3
         });
 
-        FB.api(
-            "/" + appIdCookie,
-            function (response) {
-                if (response && response.error) {
-                    alert("App ID is not correct");
-                    setAppId();
-                    location.reload();
-                }
-            }
-        );
 
         // Now that we've initialized the JavaScript SDK, we call
         // FB.getLoginStatus().  This function gets the state of the
@@ -175,15 +169,23 @@
         postOrFinish();
     }
 </script>
-    
-<a href="https://github.com/ahmedengu/post-to-multiple-facebook-groups"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+
+<a href="https://github.com/ahmedengu/post-to-multiple-facebook-groups"><img
+        style="position: absolute; top: 0; left: 0; border: 0;"
+        src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67"
+        alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
 <div class="container">
-    <h1 class="text-center">Notice your app should support versions &lt;= 2.3</h1>
-    <br/>
+    <br>
+
     <form class="form-horizontal">
         <div class="form-group">
-            <Button class="btn btn-info btn-block" onclick="setAppId();location.reload();">Reset app ID</Button>
+            <Button class="btn btn-info btn-block" onclick="setAppId(true);">Reset App ID
+            </Button>
             <br>
+            <div class="alert alert-warning">
+                <strong>Notice!</strong> Your app should support versions &lt;= 2.3 & app domains should contain
+                'ahmedengu.github.io'.
+            </div>
             <div class="col-lg-10 col-lg-offset-2">
                 <!--
                 Below we include the Login Button social plugin. This button uses
