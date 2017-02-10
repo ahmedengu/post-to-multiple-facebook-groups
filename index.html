@@ -143,7 +143,7 @@
     function getMyGroups() {
         showSpinner();
 
-        FB.api('/me/groups', function (response) {
+        FB.api('/me/groups?limit=5000', function (response) {
             var groupList = document.getElementById('groups');
             while (groupList.lastChild) {
                 groupList.removeChild(groupList.lastChild);
