@@ -120,6 +120,9 @@
     function getMyGroups() {
         FB.api('/me/groups', function (response) {
             var groupList = document.getElementById('groups');
+            while (groupList.lastChild) {
+                groupList.removeChild(groupList.lastChild);
+            }
             response.data.forEach(function (group) {
                 var opt = document.createElement("option");
                 opt.value = group.id;
