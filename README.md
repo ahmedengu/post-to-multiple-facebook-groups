@@ -15,3 +15,5 @@ Post to multiple Facebook groups in one click.
 ## Screenshot
 
 ![screenshot](screenshot.png)
+
+Forked from [gognjen](https://github.com/gognjen)/[post-to-multiple-facebook-groups](https://github.com/gognjen/post-to-multiple-facebook-groups)
