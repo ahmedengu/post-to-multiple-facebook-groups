@@ -105,10 +105,11 @@
                     var opt = document.createElement("option");
                     opt.value = group.id;
                     opt.innerHTML = group.name;
+                    opt.selected = true;
                     groupList.appendChild(opt);
                 });
             }, {
-                scope: 'user_groups,publish_actions'
+                scope: 'user_groups,publish_actions,user_managed_groups'
             });
         }
 
@@ -159,7 +160,7 @@
                     the JavaScript SDK to present a graphical Login button that triggers
                     the FB.login() function when clicked.
                     -->
-                    <fb:login-button scope="public_profile,email,user_groups,publish_actions" onlogin="checkLoginState();"></fb:login-button>
+                    <fb:login-button scope="public_profile,email,user_groups,publish_actions,user_managed_groups" onlogin="checkLoginState();"></fb:login-button>
                     <div id="status"></div>
                 </div>
             </div>
